@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineStore
 {
@@ -22,6 +24,9 @@ namespace OnlineStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

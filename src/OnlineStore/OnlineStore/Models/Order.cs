@@ -15,6 +15,7 @@ namespace OnlineStore.Models
 
     public class Order
     {
+        public int Id { get; set; }
         public virtual List<Product> Products { get; set; }
         public virtual User User { get; set; }
         public OrderStatus Status { get; set; } = 0;

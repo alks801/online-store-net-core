@@ -10,11 +10,17 @@ namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
+        OnlineStoreDbContext db;
+        public HomeController(OnlineStoreDbContext context)
+        {
+            db = context;
+        }
+
         [Route("")]
         [Route("main")]
         public IActionResult Index()
         {
-            return View();
+            return View(db.Products.ToList());
         }
 
         public IActionResult Error()
