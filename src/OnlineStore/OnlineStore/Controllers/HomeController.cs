@@ -20,7 +20,14 @@ namespace OnlineStore.Controllers
         [Route("main")]
         public IActionResult Index()
         {
-            return View(db.Products.ToList());
+            return View();
+        }
+
+        [HttpPost]
+        [Route("getModel")]
+        public JsonResult GetPageModel(int pageNumber = 1)
+        {
+            return Json(db.Products.ToList());
         }
 
         public IActionResult Error()
