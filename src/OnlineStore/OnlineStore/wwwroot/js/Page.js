@@ -21,6 +21,11 @@ page.getModel = async function () {
             model = {};
             model.products = {};
             model.products = data;
+            model.ordersSum = function () {
+                if (!model.orders)
+                    return 0;
+                return _.sumBy(model.orders, (p) => { return p.cost });
+            };
             eventWorker.delete(preBindOrer, 'getModel');
         },
         error: function (jqxhr, status, errorMsg) {

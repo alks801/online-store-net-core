@@ -1,8 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
 <script type="text/x-template" id="product-template">
-    <div v-for="p in products">
-        @{{p.name}}
-    </div> 
+    <div class="product-container container-fluid">
+        <div v-for="p in products" class="col-sm-3 col-1">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4 class="card-title">{{p.name}}</h4>
+                    <img :src="p.imgSrc" :alt="p.name">
+                    <p class="card-text">{{p.description}}</p>
+                    <h5 class="card-title">${{p.cost}}</h5>
+                    <a href="#" class="btn btn-primary" v-on:click="order(p.id)">Order</a>
+                </div>
+            </div>
+
 </script>
 </html>

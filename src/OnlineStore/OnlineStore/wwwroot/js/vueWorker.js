@@ -3,6 +3,7 @@
 function vueWorker() { };
 
 //js working with vue
+//Just demonstrating component and binding
 vueWorker.init = function () {
     eventWorker.push(bindOrer, 'bind');
     if (model) {
@@ -12,27 +13,44 @@ vueWorker.init = function () {
             var sourceHtml = $("<div/>").append(html);
             //product template
             //Sure, I could write template right here for example.
+            //Or use binding in Index.cshtnl or don't use Vue lol.
             var productTemplate = sourceHtml.find("script#product-template").html();
 
-            Vue.component('product', {
-                template: productTemplate/*,
-                props: ['productId'],
+            Vue.component('products', {
+                template: productTemplate,
                 data: function () {
-                    var productId = this.productId;
-                    var product = _.find(model.products, (p) => { return r.id == productId; });
-                    return product;
-                }*/
-                , data: function () {
-                    return model.products;
+                    return model;
+                },
+                methods: {
+                    order: function (id) {
+                        if (!id) return;
+                        if (!model.orders) model.orders = [];
+                        var product = _.find(model.products, function (p) { return p.id === id; });
+                        //It is not optimal. We could do here dictionary
+                        // productId : count
+                        //But it is an example project.
+                        model.orders.push(product);
+                        $('.orders-badge').text(model.orders.length);
+                        new Noty({
+                            text: '<div class ="noty-product-name">' + product.name + '</div> has been added to cart!<br>Total cost: ' + model.ordersSum(),
+                            timeout: 3000
+                        }).show();
+                    }
                 }
             });
 
             vue = new Vue({
                 el: "div.body-content",
-                data: model
-
+                //data: model,
+                //methods: {
+                //    order : function (e) {
+                //    
+                //    }
+                //}
             });
+
+            new Vue({ el: 'nav', data: model });
+            eventWorker.delete(bindOrer, 'bind');
         });
     }
-    eventWorker.delete(bindOrer, 'bind');
 };
