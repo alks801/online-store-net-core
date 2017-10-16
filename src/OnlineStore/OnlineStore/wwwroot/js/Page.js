@@ -21,11 +21,10 @@ page.getModel = async function () {
             model = {};
             model.products = {};
             model.products = data;
-            model.ordersSum = function () {
-                if (!model.orders)
-                    return 0;
-                return _.sumBy(model.orders, (p) => { return p.cost });
-            };
+
+            //For vue binding.
+            _.forEach(model.products, (p) => { p.countInCart = 0; });
+
             eventWorker.delete(preBindOrer, 'getModel');
         },
         error: function (jqxhr, status, errorMsg) {

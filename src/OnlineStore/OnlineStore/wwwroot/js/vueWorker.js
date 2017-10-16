@@ -21,35 +21,48 @@ vueWorker.init = function () {
                 data: function () {
                     return model;
                 },
+                props: ['productId'],
                 methods: {
-                    order: function (id) {
+                    moveToCart: function (id) {
                         if (!id) return;
-                        if (!model.orders) model.orders = [];
-                        var product = _.find(model.products, function (p) { return p.id === id; });
+                        if (!model.cartProducts) model.cartProducts = [];
+                        var product = helpers.getProductById(id);
+
                         //It is not optimal. We could do here dictionary
                         // productId : count
                         //But it is an example project.
-                        model.orders.push(product);
-                        $('.orders-badge').text(model.orders.length);
-                        new Noty({
-                            text: '<div class ="noty-product-name">' + product.name + '</div> has been added to cart!<br>Total cost: ' + model.ordersSum(),
-                            timeout: 3000
-                        }).show();
+                        model.cartProducts.push(product);
+
+                        helpers.updateCountInCart(product);
+                        notyWorker.addToCartInfo(product);
+                    },
+                    deleteFromCart: function (id) {
+                        if (!id) return;
+                        var product = helpers.getProductById(id);
+                        var index = _.findIndex(model.cartProducts, (p) => { return p.id == product.id });
+                        if (index != -1)
+                            model.cartProducts.splice(index, 1);
+                        helpers.updateCountInCart(product);
+                        notyWorker.deletoFromCartInfo(product);
                     }
-                }
+                },
+                /*computed: {
+                    countProductInOrders: {
+                        cache: false,
+                        get: function () {
+                            return Date.now();
+                            if (!this.productId) return 0;
+                            return _.filter(model.cartProducts, (p) => { return p.id === productId }).length;
+                        }
+                    }
+                }*/
             });
 
             vue = new Vue({
                 el: "div.body-content",
-                //data: model,
-                //methods: {
-                //    order : function (e) {
-                //    
-                //    }
-                //}
+                data: model
             });
 
-            new Vue({ el: 'nav', data: model });
             eventWorker.delete(bindOrer, 'bind');
         });
     }

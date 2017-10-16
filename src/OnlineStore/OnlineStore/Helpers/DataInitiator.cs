@@ -7,7 +7,6 @@ namespace OnlineStore.Helpers
     {
         public static void Initialize(OnlineStoreDbContext context)
         {
-            context.SaveChanges();
             if (!context.Products.Any())
             {
                 context.Products.AddRange(
@@ -19,6 +18,22 @@ namespace OnlineStore.Helpers
                         Description = "A phone Apple's company.",
                         Cost = 600
                     },
+                    new Product
+                    {
+                        Name = "iPhone 8",
+                        ImgSrc = "https://www.poloinvest.ru/wp-content/uploads/2017/04/iphone8.jpg",
+                        Type = ProductType.Phone,
+                        Description = "A phone Apple's company.",
+                        Cost = 800
+                    },
+                    new Product
+                    {
+                        Name = "Xiaomi Mi Notebook Air",
+                        ImgSrc = "https://avatars.mds.yandex.net/get-mpic/397397/img_id3038328375620920498.jpeg/orig",
+                        Type = ProductType.Notebook,
+                        Description = "Very powerful notebook by Xiaomi.",
+                        Cost = 1000
+                    }
                     new Product
                     {
                         Name = "Lenovo IdeaPad",

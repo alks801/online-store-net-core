@@ -2,16 +2,29 @@
 <html>
 <script type="text/x-template" id="product-template">
     <div class="product-container container-fluid">
-        <div v-for="p in products" class="col-sm-3 col-1">
-            <div class="thumbnail">
-                <div class="caption">
-                    <h4 class="card-title">{{p.name}}</h4>
-                    <img :src="p.imgSrc" :alt="p.name">
-                    <p class="card-text">{{p.description}}</p>
-                    <h5 class="card-title">${{p.cost}}</h5>
-                    <a href="#" class="btn btn-primary" v-on:click="order(p.id)">Order</a>
+        <div class="row">
+            <div v-for="p in products" class="product col-xs-12 col-sm-6 col-md-4 col-lg-3  ">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4 class="card-title">{{p.name}}</h4>
+                        <div class="img-container">
+                            <img :src="p.imgSrc" :alt="p.name">
+                        </div>
+                        <p class="card-text">{{p.description}}</p>
+                        <h5 class="card-title">${{p.cost}}</h5>
+                        <div class="row">
+                            <div class="link-container col-xs-4">
+                                <a href="#" class="btn btn-primary" v-on:click="moveToCart(p.id)">Order</a>
+                            </div>
+                            <div class="order-container col-xs-4 col-xs-offset-4 text-right opacity6" :class="{ undisp : p.countInCart === 0}">
+                                <p>
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">{{(p.countInCart)}}</span>
+                                    <span class="glyphicon glyphicon glyphicon-minus-sign delete-from-cart" aria-hidden="true" v-on:click="deleteFromCart(p.id)"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
 </script>
 </html>
