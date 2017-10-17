@@ -23,6 +23,13 @@ namespace OnlineStore.Controllers
             return View();
         }
 
+
+        [Route("cart")]
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
         [HttpPost]
         [Route("getModel")]
         public JsonResult GetPageModel(int pageNumber = 1)

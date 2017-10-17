@@ -15,3 +15,8 @@ helpers.getCartSum = function () {
         return 0;
     return _.sumBy(model.cartProducts, (p) => { return p.cost });
 };
+
+helpers.saveCartProducts = function (redirectToCartNeed) {
+    sessionStorage.cartProducts = JSON.stringify(model.cartProducts);
+    if (redirectToCartNeed) location.href = location.origin + "/cart";
+}

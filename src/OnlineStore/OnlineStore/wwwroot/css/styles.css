@@ -52,3 +52,9 @@
   cursor: pointer;
   color: #b73e00;
 }
+.blockable {
+  display: block;
+}
+.cart-cost {
+  font-size: 2em;
+}

@@ -33,7 +33,7 @@ namespace OnlineStore.Helpers
                         Type = ProductType.Notebook,
                         Description = "Very powerful notebook by Xiaomi.",
                         Cost = 1000
-                    }
+                    },
                     new Product
                     {
                         Name = "Lenovo IdeaPad",

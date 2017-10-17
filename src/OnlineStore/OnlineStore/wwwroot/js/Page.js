@@ -7,6 +7,10 @@ function page() { };
 page.init = function () {
     eventWorker();
     eventWorker.preBind();
+
+    $('.orders-badge').on('click', function () {
+        helpers.saveCartProducts(true);
+    });
 };
 
 page.getModel = async function () {
@@ -24,7 +28,7 @@ page.getModel = async function () {
 
             //For vue binding.
             _.forEach(model.products, (p) => { p.countInCart = 0; });
-
+            model.cartProducts = [];
             eventWorker.delete(preBindOrer, 'getModel');
         },
         error: function (jqxhr, status, errorMsg) {

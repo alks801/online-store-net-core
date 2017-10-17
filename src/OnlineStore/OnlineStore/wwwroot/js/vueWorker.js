@@ -9,12 +9,13 @@ vueWorker.init = function () {
     if (model) {
         //Getting tamplate. It could be many templates in one file
         //Just for fun
-        $.get("/js/vue_templates/product.html", null, function (html) {
+        $.get("/js/vue_templates/templates.html", null, function (html) {
             var sourceHtml = $("<div/>").append(html);
             //product template
             //Sure, I could write template right here for example.
             //Or use binding in Index.cshtnl or don't use Vue lol.
             var productTemplate = sourceHtml.find("script#product-template").html();
+            var cartTemplate = sourceHtml.find("script#cart-template").html();
 
             Vue.component('products', {
                 template: productTemplate,
@@ -25,7 +26,6 @@ vueWorker.init = function () {
                 methods: {
                     moveToCart: function (id) {
                         if (!id) return;
-                        if (!model.cartProducts) model.cartProducts = [];
                         var product = helpers.getProductById(id);
 
                         //It is not optimal. We could do here dictionary
@@ -56,6 +56,19 @@ vueWorker.init = function () {
                         }
                     }
                 }*/
+            });
+
+            Vue.component('cart', {
+                template: cartTemplate,
+                data: function () {
+                    model.cartProducts= JSON.parse(sessionStorage.cartProducts);
+                    return model;
+                },
+                computed: {
+                    totalCost: function () {
+                        return helpers.getCartSum();
+                    }
+                }
             });
 
             vue = new Vue({
